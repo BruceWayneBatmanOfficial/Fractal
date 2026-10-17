@@ -1,1 +1,4 @@
 pillow
+streamlit
+pandas
+numpy
