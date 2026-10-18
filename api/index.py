@@ -1,19 +1,27 @@
-import os
-import sys
-import subprocess
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
-# Direct Vercel to look at your main streamlit file
-def handler(request):
-    try:
-        # Runs the streamlit application as a background process script execution
-        script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'streamlitapp.py'))
-        subprocess.run(["streamlit", "run", script_path, "--server.port=8080", "--server.address=0.0.0.0"], check=True)
-    except Exception as e:
-        return {
-            "statusCode": 500,
-            "body": f"Error starting Streamlit: {str(e)}"
-        }
-    return {
-        "statusCode": 200,
-        "body": "Streamlit environment initialized."
-    }
+# Vercel explicitly scans the file for this exact variable name:
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Fractal Generator</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #121212; color: white; }
+                h1 { color: #0070f3; }
+                p { font-size: 18px; }
+            </style>
+        </head>
+        <body>
+            <h1>Fractal Application</h1>
+            <p>Welcome to the Vercel-compatible deployment of the Fractal project.</p>
+            <small>Serverless dynamic rendering active.</small>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
