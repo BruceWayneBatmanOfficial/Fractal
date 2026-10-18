@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-# Vercel explicitly scans the file for this exact variable name:
+# Vercel explicitly scans for this specific object name at root level:
 app = FastAPI()
 
 @app.get("/")
