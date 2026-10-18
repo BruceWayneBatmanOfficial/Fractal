@@ -2,3 +2,5 @@ pillow
 streamlit
 pandas
 numpy
+fastapi
+uvicorn
